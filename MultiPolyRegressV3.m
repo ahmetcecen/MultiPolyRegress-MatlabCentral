@@ -153,10 +153,7 @@ function reg = MultiPolyRegressV3(Data,R,PW,varargin)
     
 	% Leave One Out Cross Validation
 	H=QQ*QQ';
-    rCV=zeros(NData,1);
-    for i=1:NData
-        rCV(i)=(R(i)-yhat(i))/(1-H(i,i));
-    end
+    rCV=r./(1-diag(H));
 
     % LOOCV Goodness of Fit
     CVr2 = 1 - (norm(rCV)).^2/norm(R-mean(R))^2; 
