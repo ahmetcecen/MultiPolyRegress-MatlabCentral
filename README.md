@@ -1,5 +1,5 @@
 <html><head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="generator" content="MATLAB 8.2"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2014-07-25"><meta name="DC.source" content="Example.m"><style type="text/css">
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
 
@@ -55,8 +55,9 @@ span.syscmd { color:#B28C00 }
 table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
 table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
 
-  </style></head><body><div class="content"><h1>MultiPolyRegressV3-MatlabCentral</h1><p>Isolated Repository for Multivariate Polynomial Regression.</p><p>This is one of the codes that can have a much broader functionality than the specific area I usually work on. This will also serve as a test run before publishing more elaborate public repos.</p>
-<h2>Contents</h2><div><ul><li><a href="#1">How to Us
+
+
+
 
   </style></head><body><div class="content"><h1>Example For MultiPolyRegressV3</h1><p>X is your Data matrix. 500 data point with 5 dimensions. Another way to look at this is 500 samples of 5 independent variables. Y is your observation vector 500 by 1. You want to find a good polynomial fit of columns of X to Y. Lets say you decided fit a 2nd degree polynomial to all 5 independent variables. And you are for the moment, interested in fitting the standard polynomial basis without further meddling with the terms.</p>
 <h2>Contents</h2><div><ul><li><a href="#1">How to Use the Inputs</a></li><li><a href="#2">Plain</a></li><li><a href="#3">Normalization - Range</a></li><li><a href="#4">Figure</a></li><li><a href="#5">Legend</a></li><li><a href="#6">PV</a></li><li><a href="#7">How to Use the Outputs</a></li><li><a href="#8">PowerMatrix</a></li><li><a href="#9">Scores</a></li><li><a href="#10">Cofficients</a></li><li><a href="#11">Legend</a></li><li><a href="#12">yhat</a></li><li><a href="#13">Residuals</a></li><li><a href="#14">Goodness of Fit Measures</a></li></ul></div><h2>How to Use the Inputs<a name="1"></a></h2><h2>Plain<a name="2"></a></h2><pre class="codeinput">load <span class="string">Example.mat</span>
