@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <title>MultipolyregressV3 by ahmetcecen</title>
+  </head>
+
+  <body>
+    <div id="container">
+      <div class="inner">
+
+        <header>
+          <h1>MultipolyregressV3</h1>
+          <h2>Multivariate Polynomial Regression</h2>
+        </header>
+
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/ahmetcecen/MultiPolyRegressV3-MatlabCentral/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/ahmetcecen/MultiPolyRegressV3-MatlabCentral/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/ahmetcecen/MultiPolyRegressV3-MatlabCentral" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
+          <p></p><div>
+<h1>
+<a name="multipolyregressv3" class="anchor" href="#multipolyregressv3"><span class="octicon octicon-link"></span></a>MultiPolyRegressV3</h1>
+<p align="justify">Isolated Repository for Multivariate Polynomial Regression</p>
+<p align="justify">This is one of the codes that can have a much broader functionality than the specific area I usually work on. This will also serve as a test run before publishing more elaborate public repos.</p>
+<h1>
+<a name="example-for-multipolyregressv3" class="anchor" href="#example-for-multipolyregressv3"><span class="octicon octicon-link"></span></a>Example For MultiPolyRegressV3</h1>
+<p align="justify">X is your Data matrix. 500 data point with 5 dimensions. Another way to look at this is 500 samples of 5 independent variables. Y is your observation vector 500 by 1. You want to find a good polynomial fit of columns of X to Y. Lets say you decided fit a 2nd degree polynomial to all 5 independent variables. And you are for the moment, interested in fitting the standard polynomial basis without further meddling with the terms.</p>
+<h2>
+<a name="contents" class="anchor" href="#contents"><span class="octicon octicon-link"></span></a>Contents</h2>
+<div><ul>
+<li><a href="#1">How to Use the Inputs</a></li>
+<li><a href="#2">Plain</a></li>
+<li><a href="#3">Normalization - Range</a></li>
+<li><a href="#4">Figure</a></li>
+<li><a href="#5">Legend</a></li>
+<li><a href="#6">PV</a></li>
+<li><a href="#7">How to Use the Outputs</a></li>
+<li><a href="#8">PowerMatrix</a></li>
+<li><a href="#9">Scores</a></li>
+<li><a href="#10">Cofficients</a></li>
+<li><a href="#11">Legend</a></li>
+<li><a href="#12">yhat</a></li>
+<li><a href="#13">Residuals</a></li>
+<li><a href="#14">Goodness of Fit Measures</a></li>
+</ul></div>
+<h2>
+<a name="how-to-use-the-inputs" class="anchor" href="#how-to-use-the-inputs"><span class="octicon octicon-link"></span></a>How to Use the Inputs<a name="1"></a>
+</h2>
+<h2>
+<a name="plain" class="anchor" href="#plain"><span class="octicon octicon-link"></span></a>Plain<a name="2"></a>
+</h2>
+<pre>load Example.mat
+reg=MultiPolyRegressV3(X,Y,2) % Gives you your fit.
+</pre>
+<pre>
+reg = 
+
+<pre><code>     FitParameters: '-----------------'
+       PowerMatrix: [21x5 double]
+            Scores: [500x21 double]
+      Coefficients: [21x1 double]
+            Legend: 'No Legend'
+              yhat: [500x1 double]
+         Residuals: [500x1 double]
+     GoodnessOfFit: '-----------------'
+           RSquare: 0.9392
+               MAE: 0.0334
+            MAESTD: 0.0481
+     Normalization: '1-to-1 (Default)'
+LOOCVGoodnessOfFit: '-----------------'
+         CVRSquare: 0.9280
+             CVMAE: 0.0366
+          CVMAESTD: 0.0590
+   CVNormalization: '1-to-1 (Default)'
+</code></pre>
+
+<p></p></pre>
+<h2>
+<a name="normalization---range" class="anchor" href="#normalization---range"><span class="octicon octicon-link"></span></a>Normalization - Range<a name="3"></a>
+</h2>
+<p align="justify">Different error definition ONLY in the calculation of MAE, MAESTD, CVMAE and CVMAESTD. Does not effect the fit.</p>
+<pre>load Example.mat
+reg=MultiPolyRegressV3(X,Y,2,'range')
+</pre>
+<pre>
+reg = 
+
+<pre><code>     FitParameters: '-----------------'
+       PowerMatrix: [21x5 double]
+            Scores: [500x21 double]
+      Coefficients: [21x1 double]
+            Legend: 'No Legend'
+              yhat: [500x1 double]
+         Residuals: [500x1 double]
+     GoodnessOfFit: '-----------------'
+           RSquare: 0.9392
+               MAE: 0.0293
+            MAESTD: 0.0313
+     Normalization: 'Range'
+LOOCVGoodnessOfFit: '-----------------'
+         CVRSquare: 0.9280
+             CVMAE: 0.0313
+          CVMAESTD: 0.0346
+   CVNormalization: 'Range'
+</code></pre>
+
+<p></p></pre>
+<h2>
+<a name="figure" class="anchor" href="#figure"><span class="octicon octicon-link"></span></a>Figure<a name="4"></a>
+</h2>
+<p align="justify">You would like to see a scatter plot of your fit.</p>
+<pre>reg=MultiPolyRegressV3(X,Y,2,'figure');
+</pre>
+<img vspace="5" hspace="5" src="http://ahmetcecen.github.io/MultiPolyRegressV3Example/Example_01.png" alt=""><h2>
+<a name="legend" class="anchor" href="#legend"><span class="octicon octicon-link"></span></a>Legend<a name="5"></a>
+</h2>
+<p align="justify">You would like to see the actual formula of the fit,</p>
+<pre>reg=MultiPolyRegressV3(X,Y,2,'legend');
+PolynomialFormula=vpa([reg.Coefficients reg.Legend],5)
+</pre>
+<pre> 
+PolynomialFormula =
+
+<p>[    0.0052679,    x5]
+[    0.0073888,    x4]
+[ -0.000087941, x4*x5]
+[     0.016723,    x3]
+[  -0.00097694, x3*x5]
+[  0.000083902, x3*x4]
+[     0.015417,    x2]
+[   -0.0025415, x2*x5]
+[     0.002392, x2*x4]
+[  -0.00018939, x2*x3]
+[    -0.028576,    x1]
+[  -0.00045571, x1*x5]
+[  -0.00037732, x1*x4]
+[  -0.00010521, x1*x3]
+[  -0.00047654, x1*x2]
+[       4.0108,   1.0]
+[ -0.000049811,  x1^2]
+[  -0.00026949,  x2^2]
+[   0.00014575,  x3^2]
+[ -0.000065765,  x4^2]
+[     0.011599,  x5^2]</p>
+
+<p></p></pre>
+<h2>
+<a name="pv" class="anchor" href="#pv"><span class="octicon octicon-link"></span></a>PV<a name="6"></a>
+</h2>
+<p align="justify">You would like to limit the observed powers of certain terms in your polynomial. For example, you do not want the 1st and 4th Independent Variables (x1 and x4) to have second order terms (x1^2 or x4^2). Notice you have to explicitly write how high each term can go in powers, so I would also state I am fine with (x2 x3 and x5) having 2nd order terms.</p>
+<pre>reg=MultiPolyRegressV3(X,Y,2,[1 2 2 1 2],'legend');
+PolynomialFormula=vpa([reg.Coefficients reg.Legend],5)
+</pre>
+<pre> 
+PolynomialFormula =
+
+<p>[   0.0022642,    x5]
+[   0.0058919,    x4]
+[ -0.00049119, x4*x5]
+[     0.01644,    x3]
+[ -0.00098813, x3*x5]
+[ 0.000076129, x3*x4]
+[    0.014969,    x2]
+[  -0.0023337, x2*x5]
+[   0.0028077, x2*x4]
+[ -0.00012646, x2*x3]
+[   -0.027613,    x1]
+[ -0.00036617, x1*x5]
+[ -0.00043459, x1*x4]
+[ -0.00011518, x1*x3]
+[  -0.0009348, x1*x2]
+[      3.9964,   1.0]
+[   0.0004941,  x2^2]
+[  0.00014775,  x3^2]
+[    0.010017,  x5^2]</p>
+
+<p></p></pre>
+<h2>
+<a name="how-to-use-the-outputs" class="anchor" href="#how-to-use-the-outputs"><span class="octicon octicon-link"></span></a>How to Use the Outputs<a name="7"></a>
+</h2>
+<pre>reg=MultiPolyRegressV3(X,Y,2);
+</pre>
+<h2>
+<a name="powermatrix" class="anchor" href="#powermatrix"><span class="octicon octicon-link"></span></a>PowerMatrix<a name="8"></a>
+</h2>
+<p align="justify">You have a new data point you would like to evaluate using the computed fit. Lets assume for the sake of argument that the 250th row of X is in fact a new data point.</p>
+<p align="justify">Unless you have a stake in deeply understanding this code, don't try to make sense of the NewScores matrix, or what follows. I sometimes have to stare at it for a couple minutes to figure it out myself. I am happy discuss this in detail upon specific request.</p>
+<p align="justify">You have to repeat this procedure for every new data point. It might be time saving to write a function that does this automatically, however I never needed this functionality, so I wouldn't count on me writing that.</p>
+<pre>NewDataPoint=X(250,:);
+NewScores=repmat(NewDataPoint,[length(reg.PowerMatrix) 1]).^reg.PowerMatrix;
+EvalScores=ones(length(reg.PowerMatrix),1);
+for ii=1:size(reg.PowerMatrix,2)
+    EvalScores=EvalScores.*NewScores(:,ii);
+end
+yhatNew=reg.Coefficients'*EvalScores % The estimate for the new data point.
+</pre>
+<pre>
+yhatNew =
+
+<pre><code>5.2877
+</code></pre>
+
+<p></p></pre>
+<h2>
+<a name="scores" class="anchor" href="#scores"><span class="octicon octicon-link"></span></a>Scores<a name="9"></a>
+</h2>
+<p align="justify">Unless you have a stake in deeply understanding this code, don't try to make sense of the Scores matrix, chances are you won't ever need to use it.</p>
+<h2>
+<a name="cofficients" class="anchor" href="#cofficients"><span class="octicon octicon-link"></span></a>Cofficients<a name="10"></a>
+</h2>
+<p align="justify">This was shown earlier at the input examples.</p>
+<h2>
+<a name="legend-1" class="anchor" href="#legend-1"><span class="octicon octicon-link"></span></a>Legend<a name="11"></a>
+</h2>
+<p align="justify">This was shown earlier at the input examples.</p>
+<h2>
+<a name="yhat" class="anchor" href="#yhat"><span class="octicon octicon-link"></span></a>yhat<a name="12"></a>
+</h2>
+<p align="justify">This is the vector of estimates using your new fit. The scatter plot you see when you use the 'figure' option is generated using scatter(yhat,y).</p>
+<h2>
+<a name="residuals" class="anchor" href="#residuals"><span class="octicon octicon-link"></span></a>Residuals<a name="13"></a>
+</h2>
+<p align="justify">This is defined as y-yhat. Can be used for a residual plot to see if ordinary least squares assumptions hold true.</p>
+<h2>
+<a name="goodness-of-fit-measures" class="anchor" href="#goodness-of-fit-measures"><span class="octicon octicon-link"></span></a>Goodness of Fit Measures<a name="14"></a>
+</h2>
+<p align="justify">These are useful not only in assesing the accuracy of your fit, but also comparing different candidates. For example, lets see how different powers compare for the same fit for the above dataset. I personally would like to use CVMAE as my comparative error measure, since it is more sensitive to overfitting.</p>
+<p align="justify">It turns out, the second degree polynomial is the best option. One way to interpret this number is saying the fit makes in average a 3.66% error with respect to the original Y when estimating.</p>
+<pre>for ii=1:5
+    reg=MultiPolyRegressV3(X,Y,ii);
+    CVMAE(ii)=reg.CVMAE;
+end
+CVMAE
+</pre>
+<pre>
+CVMAE =
+
+<pre><code>0.0383    0.0366    0.0416    0.1255    3.7904
+</code></pre>
+
+<p></p></pre>
+<p><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB<g-emoji alias="registered" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/00ae.png">®</g-emoji> R2013b</a><br></p>
+</div>
+        </section>
+
+        <footer>
+          MultipolyregressV3 is maintained by <a href="https://github.com/ahmetcecen">ahmetcecen</a><br>
+          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+        
+      </div>
+    </div>
+  </body>
+</html>
