@@ -201,12 +201,12 @@ PolynomialFormula =
 <p align="justify">Unless you have a stake in deeply understanding this code, don't try to make sense of the NewScores matrix, or what follows. I sometimes have to stare at it for a couple minutes to figure it out myself. I am happy discuss this in detail upon specific request.</p>
 <p align="justify">You have to repeat this procedure for every new data point. It might be time saving to write a function that does this automatically, however I never needed this functionality, so I wouldn't count on me writing that.</p>
 <pre>NewDataPoint=X(250,:);
-NewScores=repmat(NewDataPoint,[length(reg.PowerMatrix) 1]).^reg.PowerMatrix;
+Score=repmat(NewDataPoint,[length(reg.PowerMatrix) 1]).^reg.PowerMatrix;
 EvalScores=ones(length(reg.PowerMatrix),1);
 for ii=1:size(reg.PowerMatrix,2)
     EvalScores=EvalScores.*NewScores(:,ii);
 end
-yhatNew=reg.Coefficients'*EvalScores % The estimate for the new data point.
+yhatNew=reg.Coefficients'*EvalScores % Estimate for the new data point.
 </pre>
 <pre>
 yhatNew =
