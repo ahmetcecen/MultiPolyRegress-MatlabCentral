@@ -18,7 +18,7 @@ time, mark, audio, video {
 	margin: 0;
 	padding: 0;
 	border: 0;
-	font-size: 50%;
+	font-size: 100%;
 	font: inherit;
 	vertical-align: baseline;
 }
@@ -72,14 +72,14 @@ header h1 {
   font-family: 'Chivo', 'Helvetica Neue', Helvetica, Arial, serif; font-weight: 900;
   letter-spacing: -1px;
   font-size: 48px;
-  color: #303030;
+  color: #EEB211;
   line-height: 1.2;
 }
 
 header h2 {
   letter-spacing: -1px;
-  font-size: 24px;
-  color: #aaa;
+  font-size: 20px;
+  color: #FFFFFF;
   font-weight: normal;
   line-height: 1.3;
 }
