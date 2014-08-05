@@ -1,5 +1,6 @@
 function reg = MultiPolyRegressV3(Data,R,PW,varargin)
-%   Multi-variable polynomial regression analysis. 
+%   Multi-variable polynomial regression analysis. A by-product of ongoing computational
+%   materials science research at MINED@Gatech.(http://mined.gatech.edu/)
 %
 %   reg = MultiPolyRegress(Data,R,PW) performs multi-variable polynomial 
 %   regression analysis on row stacked dimensional data matrix Data. Data is 
