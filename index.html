@@ -11,7 +11,7 @@
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <title>MultipolyregressV3 by ahmetcecen</title>
+    <title>MultiPolyRegress by ahmetcecen</title>
   </head>
 
   <body>
@@ -19,14 +19,14 @@
       <div class="inner">
 
         <header>		  
-          <h1><a href="http://mined.gatech.edu/" target="_blank"><img src="/images/MINEDlogo.png" align="left" alt="MINED Research Group" title="MINED Research Group" width="50" height="62"></a>&nbsp MultipolyregressV3</h1>
+          <h1><a href="http://mined.gatech.edu/" target="_blank"><img src="/images/MINEDlogo.png" align="left" alt="MINED Research Group" title="MINED Research Group" width="50" height="62"></a>&nbsp MultiPolyRegress</h1>
           <h2>&nbsp A by-product of ongoing computational materials science research at <a href="http://mined.gatech.edu/">MINED@Gatech</a></h2>
         </header>
 
         <section id="downloads" class="clearfix">
-          <a href="https://github.com/ahmetcecen/MultiPolyRegressV3-MatlabCentral/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
-          <a href="https://github.com/ahmetcecen/MultiPolyRegressV3-MatlabCentral/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
-          <a href="https://github.com/ahmetcecen/MultiPolyRegressV3-MatlabCentral" id="view-on-github" class="button"><span>View on GitHub</span></a>
+          <a href="https://github.com/ahmetcecen/MultiPolyRegress-MatlabCentral/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/ahmetcecen/MultiPolyRegress-MatlabCentral/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/ahmetcecen/MultiPolyRegress-MatlabCentral" id="view-on-github" class="button"><span>View on GitHub</span></a>
         </section>
 
         <hr>
@@ -34,11 +34,11 @@
         <section id="main_content">
           <p></p><div>
 <h1>
-<a name="multipolyregressv3" class="anchor" href="#multipolyregressv3"><span class="octicon octicon-link"></span></a>MultiPolyRegressV3</h1>
+<a name="MultiPolyRegress" class="anchor" href="#MultiPolyRegress"><span class="octicon octicon-link"></span></a>MultiPolyRegress</h1>
 <p align="justify">Isolated Repository for Multivariate Polynomial Regression</p>
 <p align="justify">This is one of the codes that can have a much broader functionality than the specific area I usually work on. This will also serve as a test run before publishing more elaborate public repos. Leave feedback and open issues at the Github or Matlab File Exchange pages.</p>
 <h1>
-<a name="example-for-multipolyregressv3" class="anchor" href="#example-for-multipolyregressv3"><span class="octicon octicon-link"></span></a>Example For MultiPolyRegressV3</h1>
+<a name="example-for-MultiPolyRegress" class="anchor" href="#example-for-MultiPolyRegress"><span class="octicon octicon-link"></span></a>Example For MultiPolyRegress</h1>
 <p align="justify">X is your Data matrix. 500 data point with 5 dimensions. Another way to look at this is 500 samples of 5 independent variables. Y is your observation vector 500 by 1. You want to find a good polynomial fit of columns of X to Y. Lets say you decided fit a 2nd degree polynomial to all 5 independent variables. And you are for the moment, interested in fitting the standard polynomial basis without further meddling with the terms.</p>
 <h2>
 <a name="contents" class="anchor" href="#contents"><span class="octicon octicon-link"></span></a>Contents</h2>
@@ -65,7 +65,7 @@
 <a name="plain" class="anchor" href="#plain"><span class="octicon octicon-link"></span></a>Plain<a name="2"></a>
 </h2>
 <pre>load Example.mat
-reg=MultiPolyRegressV3(X,Y,2) % Gives you your fit.
+reg=MultiPolyRegress(X,Y,2) % Gives you your fit.
 </pre>
 <pre>
 reg = 
@@ -95,7 +95,7 @@ LOOCVGoodnessOfFit: '-----------------'
 </h2>
 <p align="justify">Different error definition ONLY in the calculation of MAE, MAESTD, CVMAE and CVMAESTD. Does not effect the fit.</p>
 <pre>load Example.mat
-reg=MultiPolyRegressV3(X,Y,2,'range')
+reg=MultiPolyRegress(X,Y,2,'range')
 </pre>
 <pre>
 reg = 
@@ -124,13 +124,13 @@ LOOCVGoodnessOfFit: '-----------------'
 <a name="figure" class="anchor" href="#figure"><span class="octicon octicon-link"></span></a>Figure<a name="4"></a>
 </h2>
 <p align="justify">You would like to see a scatter plot of your fit.</p>
-<pre>reg=MultiPolyRegressV3(X,Y,2,'figure');
+<pre>reg=MultiPolyRegress(X,Y,2,'figure');
 </pre>
-<img vspace="5" hspace="5" src="http://ahmetcecen.github.io/MultiPolyRegressV3Example/Example_01.png" alt=""><h2>
+<img vspace="5" hspace="5" src="http://ahmetcecen.github.io/MultiPolyRegressExample/Example_01.png" alt=""><h2>
 <a name="legend" class="anchor" href="#legend"><span class="octicon octicon-link"></span></a>Legend<a name="5"></a>
 </h2>
 <p align="justify">You would like to see the actual formula of the fit,</p>
-<pre>reg=MultiPolyRegressV3(X,Y,2,'legend');
+<pre>reg=MultiPolyRegress(X,Y,2,'legend');
 PolynomialFormula=vpa([reg.Coefficients reg.Legend],5)
 </pre>
 <pre> 
@@ -163,7 +163,7 @@ PolynomialFormula =
 <a name="pv" class="anchor" href="#pv"><span class="octicon octicon-link"></span></a>PV<a name="6"></a>
 </h2>
 <p align="justify">You would like to limit the observed powers of certain terms in your polynomial. For example, you do not want the 1st and 4th Independent Variables (x1 and x4) to have second order terms (x1^2 or x4^2). Notice you have to explicitly write how high each term can go in powers, so I would also state I am fine with (x2 x3 and x5) having 2nd order terms.</p>
-<pre>reg=MultiPolyRegressV3(X,Y,2,[1 2 2 1 2],'legend');
+<pre>reg=MultiPolyRegress(X,Y,2,[1 2 2 1 2],'legend');
 PolynomialFormula=vpa([reg.Coefficients reg.Legend],5)
 </pre>
 <pre> 
@@ -193,7 +193,7 @@ PolynomialFormula =
 <h2>
 <a name="how-to-use-the-outputs" class="anchor" href="#how-to-use-the-outputs"><span class="octicon octicon-link"></span></a>How to Use the Outputs<a name="7"></a>
 </h2>
-<pre>reg=MultiPolyRegressV3(X,Y,2);
+<pre>reg=MultiPolyRegress(X,Y,2);
 </pre>
 <h2>
 <a name="powermatrix" class="anchor" href="#powermatrix"><span class="octicon octicon-link"></span></a>PowerMatrix<a name="8"></a>
@@ -242,7 +242,7 @@ yhatNew =
 <p align="justify">These are useful not only in assesing the accuracy of your fit, but also comparing different candidates. For example, lets see how different powers compare for the same fit for the above dataset. I personally would like to use CVMAE as my comparative error measure, since it is more sensitive to overfitting.</p>
 <p align="justify">It turns out, the second degree polynomial is the best option. One way to interpret this number is saying the fit makes in average a 3.66% error with respect to the original Y when estimating.</p>
 <pre>for ii=1:5
-    reg=MultiPolyRegressV3(X,Y,ii);
+    reg=MultiPolyRegress(X,Y,ii);
     CVMAE(ii)=reg.CVMAE;
 end
 CVMAE
@@ -259,7 +259,7 @@ CVMAE =
         </section>
 
         <footer>
-          MultipolyregressV3 is maintained by <a href="https://github.com/ahmetcecen">ahmetcecen</a>
+          MultiPolyRegress is maintained by <a href="https://github.com/ahmetcecen">ahmetcecen</a>
           .This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Modified from the Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
         </footer>
 
