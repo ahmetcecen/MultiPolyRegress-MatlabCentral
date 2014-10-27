@@ -1,4 +1,4 @@
-function reg = MultiPolyRegressV3(Data,R,PW,varargin)
+function reg = MultiPolyRegress(Data,R,PW,varargin)
 %   Multi-variable polynomial regression analysis. A by-product of ongoing computational
 %   materials science research at MINED@Gatech.(http://mined.gatech.edu/)
 %
@@ -134,11 +134,21 @@ function reg = MultiPolyRegressV3(Data,R,PW,varargin)
         Scores(i,:) = eval(RowMultiC);
     end
 
-	% Use  QR to avoid explicit inversion.
-	[QQ,RR] = qr(Scores,0);
+	% Use  QR to avoid explicit inversion and check rank. 
+    [QQ,RR,perm] = qr(Scores,0);
 
+    p = sum(abs(diag(RR)) > size(Scores,2)*eps(RR(1)));
+  
+    if p < size(Scores,2)
+        warning('Rank Deficiency within Polynomial Terms!');
+        RR = RR(1:p,1:p);
+        QQ = QQ(:,1:p);
+        perm = perm(1:p);
+    end
+    
 	% Ordinary Least Squares Regression
-	b = RR \ (QQ'*R);
+    b = zeros(size(Scores,2),1);
+	b(perm) = RR \ (QQ'*R);
 	yhat = Scores*b;                     
     r = R-yhat;   
 	

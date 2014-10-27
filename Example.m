@@ -1,4 +1,4 @@
-%% Example For MultiPolyRegressV3
+%% Example For MultiPolyRegress
 % X is your Data matrix. 500 data point with 5 dimensions. Another way to
 % look at this is 500 samples of 5 independent variables. Y is your
 % observation vector 500 by 1. You want to find a good polynomial fit of
@@ -8,18 +8,18 @@
 %% How to Use the Inputs
 %% Plain
 load Example.mat
-reg=MultiPolyRegressV3(X,Y,2) % Gives you your fit.
+reg=MultiPolyRegress(X,Y,2) % Gives you your fit.
 %% Normalization - Range
 % Different error definition ONLY in the calculation of MAE, MAESTD, CVMAE
 % and CVMAESTD. Does not effect the fit.
 load Example.mat
-reg=MultiPolyRegressV3(X,Y,2,'range')
+reg=MultiPolyRegress(X,Y,2,'range')
 %% Figure
 % You would like to see a scatter plot of your fit.
-reg=MultiPolyRegressV3(X,Y,2,'figure');
+reg=MultiPolyRegress(X,Y,2,'figure');
 %% Legend
 % You would like to see the actual formula of the fit,
-reg=MultiPolyRegressV3(X,Y,2,'legend');
+reg=MultiPolyRegress(X,Y,2,'legend');
 PolynomialFormula=vpa([reg.Coefficients reg.Legend],5)
 %% PV 
 % You would like to limit the observed powers of certain terms in your
@@ -28,10 +28,10 @@ PolynomialFormula=vpa([reg.Coefficients reg.Legend],5)
 % you have to explicitly write how high each term can go in powers, so I
 % would also state I am fine with (x2 x3 and x5) having 2nd order terms. 
 
-reg=MultiPolyRegressV3(X,Y,2,[1 2 2 1 2],'legend'); 
+reg=MultiPolyRegress(X,Y,2,[1 2 2 1 2],'legend'); 
 PolynomialFormula=vpa([reg.Coefficients reg.Legend],5)
 %% How to Use the Outputs
-reg=MultiPolyRegressV3(X,Y,2);
+reg=MultiPolyRegress(X,Y,2);
 %% PowerMatrix
 % You have a new data point you would like to evaluate using the computed
 % fit. Lets assume for the sake of argument that the 250th row of X is in
@@ -78,7 +78,7 @@ yhatNew=reg.Coefficients'*EvalScores % The estimate for the new data point.
 % interpret this number is saying the fit makes in average a 3.66% error with
 % respect to the original Y when estimating.
 for ii=1:5
-    reg=MultiPolyRegressV3(X,Y,ii);
+    reg=MultiPolyRegress(X,Y,ii);
     CVMAE(ii)=reg.CVMAE;
 end
 CVMAE

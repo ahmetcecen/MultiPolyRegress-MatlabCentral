@@ -1,6 +1,6 @@
-<html><head><body><div class="content"><h1>MultiPolyRegressV3</h1><p align="justify">Isolated Repository for Multivariate Polynomial Regression</p><p align="justify">A by-product of ongoing computational materials science research at <a href=http://mined.gatech.edu/>MINED@Gatech</a>.</h1><p align="justify">X is your Data matrix. 500 data point with 5 dimensions. Another way to look at this is 500 samples of 5 independent variables. Y is your observation vector 500 by 1. You want to find a good polynomial fit of columns of X to Y. Lets say you decided fit a 2nd degree polynomial to all 5 independent variables. And you are for the moment, interested in fitting the standard polynomial basis without further meddling with the terms.</p>
+<html><head><body><div class="content"><h1>MultiPolyRegress</h1><p align="justify">Isolated Repository for Multivariate Polynomial Regression</p><p align="justify">A by-product of ongoing computational materials science research at <a href=http://mined.gatech.edu/>MINED@Gatech</a>.</h1><p align="justify">X is your Data matrix. 500 data point with 5 dimensions. Another way to look at this is 500 samples of 5 independent variables. Y is your observation vector 500 by 1. You want to find a good polynomial fit of columns of X to Y. Lets say you decided fit a 2nd degree polynomial to all 5 independent variables. And you are for the moment, interested in fitting the standard polynomial basis without further meddling with the terms.</p>
 <h2>Contents</h2><div><ul><li><a href="#1">How to Use the Inputs</a></li><li><a href="#2">Plain</a></li><li><a href="#3">Normalization - Range</a></li><li><a href="#4">Figure</a></li><li><a href="#5">Legend</a></li><li><a href="#6">PV</a></li><li><a href="#7">How to Use the Outputs</a></li><li><a href="#8">PowerMatrix</a></li><li><a href="#9">Scores</a></li><li><a href="#10">Cofficients</a></li><li><a href="#11">Legend</a></li><li><a href="#12">yhat</a></li><li><a href="#13">Residuals</a></li><li><a href="#14">Goodness of Fit Measures</a></li></ul></div><h2>How to Use the Inputs<a name="1"></a></h2><h2>Plain<a name="2"></a></h2><pre class="codeinput">load <span class="string">Example.mat</span>
-reg=MultiPolyRegressV3(X,Y,2) <span class="comment">% Gives you your fit.</span>
+reg=MultiPolyRegress(X,Y,2) <span class="comment">% Gives you your fit.</span>
 </pre><pre class="codeoutput">
 reg = 
 
@@ -23,7 +23,7 @@ reg =
        CVNormalization: '1-to-1 (Default)'
 
 </pre><h2>Normalization - Range<a name="3"></a></h2><p align="justify">Different error definition ONLY in the calculation of MAE, MAESTD, CVMAE and CVMAESTD. Does not effect the fit.</p><pre class="codeinput">load <span class="string">Example.mat</span>
-reg=MultiPolyRegressV3(X,Y,2,<span class="string">'range'</span>)
+reg=MultiPolyRegress(X,Y,2,<span class="string">'range'</span>)
 </pre><pre class="codeoutput">
 reg = 
 
@@ -45,8 +45,8 @@ reg =
               CVMAESTD: 0.0346
        CVNormalization: 'Range'
 
-</pre><h2>Figure<a name="4"></a></h2><p align="justify">You would like to see a scatter plot of your fit.</p><pre class="codeinput">reg=MultiPolyRegressV3(X,Y,2,<span class="string">'figure'</span>);
-</pre><img vspace="5" hspace="5" src="http://ahmetcecen.github.io/MultiPolyRegressV3Example/Example_01.png" alt=""> <h2>Legend<a name="5"></a></h2><p align="justify">You would like to see the actual formula of the fit,</p><pre class="codeinput">reg=MultiPolyRegressV3(X,Y,2,<span class="string">'legend'</span>);
+</pre><h2>Figure<a name="4"></a></h2><p align="justify">You would like to see a scatter plot of your fit.</p><pre class="codeinput">reg=MultiPolyRegress(X,Y,2,<span class="string">'figure'</span>);
+</pre><img vspace="5" hspace="5" src="http://ahmetcecen.github.io/MultiPolyRegressExample/Example_01.png" alt=""> <h2>Legend<a name="5"></a></h2><p align="justify">You would like to see the actual formula of the fit,</p><pre class="codeinput">reg=MultiPolyRegress(X,Y,2,<span class="string">'legend'</span>);
 PolynomialFormula=vpa([reg.Coefficients reg.Legend],5)
 </pre><pre class="codeoutput"> 
 PolynomialFormula =
@@ -73,7 +73,7 @@ PolynomialFormula =
 [ -0.000065765,  x4^2]
 [     0.011599,  x5^2]
  
-</pre><h2>PV<a name="6"></a></h2><p align="justify">You would like to limit the observed powers of certain terms in your polynomial. For example, you do not want the 1st and 4th Independent Variables (x1 and x4) to have second order terms (x1^2 or x4^2). Notice you have to explicitly write how high each term can go in powers, so I would also state I am fine with (x2 x3 and x5) having 2nd order terms.</p><pre class="codeinput">reg=MultiPolyRegressV3(X,Y,2,[1 2 2 1 2],<span class="string">'legend'</span>);
+</pre><h2>PV<a name="6"></a></h2><p align="justify">You would like to limit the observed powers of certain terms in your polynomial. For example, you do not want the 1st and 4th Independent Variables (x1 and x4) to have second order terms (x1^2 or x4^2). Notice you have to explicitly write how high each term can go in powers, so I would also state I am fine with (x2 x3 and x5) having 2nd order terms.</p><pre class="codeinput">reg=MultiPolyRegress(X,Y,2,[1 2 2 1 2],<span class="string">'legend'</span>);
 PolynomialFormula=vpa([reg.Coefficients reg.Legend],5)
 </pre><pre class="codeoutput"> 
 PolynomialFormula =
@@ -98,7 +98,7 @@ PolynomialFormula =
 [  0.00014775,  x3^2]
 [    0.010017,  x5^2]
  
-</pre><h2>How to Use the Outputs<a name="7"></a></h2><pre class="codeinput">reg=MultiPolyRegressV3(X,Y,2);
+</pre><h2>How to Use the Outputs<a name="7"></a></h2><pre class="codeinput">reg=MultiPolyRegress(X,Y,2);
 </pre><h2>PowerMatrix<a name="8"></a></h2><p align="justify">You have a new data point you would like to evaluate using the computed fit. Lets assume for the sake of argument that the 250th row of X is in fact a new data point.</p><p align="justify">Unless you have a stake in deeply understanding this code, don't try to make sense of the NewScores matrix, or what follows. I sometimes have to stare at it for a couple minutes to figure it out myself. I am happy discuss this in detail upon specific request.</p><p align="justify">You have to repeat this procedure for every new data point. It might be time saving to write a function that does this automatically, however I never needed this functionality, so I wouldn't count on me writing that.</p><pre class="codeinput">NewDataPoint=X(250,:);
 NewScores=repmat(NewDataPoint,[length(reg.PowerMatrix) 1]).^reg.PowerMatrix;
 EvalScores=ones(length(reg.PowerMatrix),1);
@@ -112,7 +112,7 @@ yhatNew =
     5.2877
 
 </pre><h2>Scores<a name="9"></a></h2><p align="justify">Unless you have a stake in deeply understanding this code, don't try to make sense of the Scores matrix, chances are you won't ever need to use it.</p><h2>Cofficients<a name="10"></a></h2><p align="justify">This was shown earlier at the input examples.</p><h2>Legend<a name="11"></a></h2><p align="justify">This was shown earlier at the input examples.</p><h2>yhat<a name="12"></a></h2><p align="justify">This is the vector of estimates using your new fit. The scatter plot you see when you use the 'figure' option is generated using scatter(yhat,y).</p><h2>Residuals<a name="13"></a></h2><p align="justify">This is defined as y-yhat. Can be used for a residual plot to see if ordinary least squares assumptions hold true.</p><h2>Goodness of Fit Measures<a name="14"></a></h2><p align="justify">These are useful not only in assesing the accuracy of your fit, but also comparing different candidates. For example, lets see how different powers compare for the same fit for the above dataset. I personally would like to use CVMAE as my comparative error measure, since it is more sensitive to overfitting.</p><p align="justify">It turns out, the second degree polynomial is the best option. One way to interpret this number is saying the fit makes in average a 3.66% error with respect to the original Y when estimating.</p><pre class="codeinput"><span class="keyword">for</span> ii=1:5
-    reg=MultiPolyRegressV3(X,Y,ii);
+    reg=MultiPolyRegress(X,Y,ii);
     CVMAE(ii)=reg.CVMAE;
 <span class="keyword">end</span>
 CVMAE
