@@ -54,7 +54,7 @@ function reg = MultiPolyRegress(Data,R,PW,varargin)
 %                  CVMAE: MAE of LOOCV
 %               CVMAESTD: MAESTD of LOOCV
 %
-%   Author : Ahmet Cecen
+%   Copyright (c) 2015, Ahmet Cecen  -  All rights reserved.
 
     % Align Data
     if size(Data,2)>size(Data,1)
