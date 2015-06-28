@@ -155,8 +155,8 @@ function reg = MultiPolyRegress(Data,R,PW,varargin)
     % Goodness of Fit
     r2 = 1 - (norm(r)).^2/norm(R-mean(R))^2;
     if strcmp(NormalizationSwitch,'Range')==1
-        mae = mean(abs(r./range(R)));
-        maestd = std(abs(r./range(R))); 
+        mae = mean(abs(r./abs(max(R)-min(R))));
+        maestd = std(abs(r./abs(max(R)-min(R)))); 
     else
         mae = mean(abs(r./R));
         maestd = std(abs(r./R));
@@ -169,8 +169,8 @@ function reg = MultiPolyRegress(Data,R,PW,varargin)
     % LOOCV Goodness of Fit
     CVr2 = 1 - (norm(rCV)).^2/norm(R-mean(R))^2; 
     if strcmp(NormalizationSwitch,'Range')==1
-        CVmae = mean(abs(rCV./range(R)));
-        CVmaestd = std(abs(rCV./range(R))); 
+        CVmae = mean(abs(rCV./abs(max(R)-min(R))));
+        CVmaestd = std(abs(rCV./abs(max(R)-min(R)))); 
     else
         CVmae = mean(abs(rCV./R));
         CVmaestd = std(abs(rCV./R));
