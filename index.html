@@ -128,37 +128,6 @@ LOOCVGoodnessOfFit: '-----------------'
 </pre>
 <img vspace="5" hspace="5" src="http://ahmetcecen.github.io/MultiPolyRegressExample/Example_01.png" alt=""><h2>
 <a name="legend" class="anchor" href="#legend"><span class="octicon octicon-link"></span></a>Legend<a name="5"></a>
-</h2>
-<p align="justify">You would like to see the actual formula of the fit,</p>
-<pre>reg=MultiPolyRegress(X,Y,2,'legend');
-PolynomialFormula=vpa([reg.Coefficients reg.Legend],5)
-</pre>
-<pre> 
-PolynomialFormula =
-
-<p>[    0.0052679,    x5]
-[    0.0073888,    x4]
-[ -0.000087941, x4*x5]
-[     0.016723,    x3]
-[  -0.00097694, x3*x5]
-[  0.000083902, x3*x4]
-[     0.015417,    x2]
-[   -0.0025415, x2*x5]
-[     0.002392, x2*x4]
-[  -0.00018939, x2*x3]
-[    -0.028576,    x1]
-[  -0.00045571, x1*x5]
-[  -0.00037732, x1*x4]
-[  -0.00010521, x1*x3]
-[  -0.00047654, x1*x2]
-[       4.0108,   1.0]
-[ -0.000049811,  x1^2]
-[  -0.00026949,  x2^2]
-[   0.00014575,  x3^2]
-[ -0.000065765,  x4^2]
-[     0.011599,  x5^2]</p>
-
-<p></p></pre>
 <h2>
 <a name="pv" class="anchor" href="#pv"><span class="octicon octicon-link"></span></a>PV<a name="6"></a>
 </h2>
@@ -167,27 +136,30 @@ PolynomialFormula =
 PolynomialFormula=vpa([reg.Coefficients reg.Legend],5)
 </pre>
 <pre> 
-PolynomialFormula =
+PolynomialFormula = 
 
-<p>[   0.0022642,    x5]
-[   0.0058919,    x4]
-[ -0.00049119, x4*x5]
-[     0.01644,    x3]
-[ -0.00098813, x3*x5]
-[ 0.000076129, x3*x4]
-[    0.014969,    x2]
-[  -0.0023337, x2*x5]
-[   0.0028077, x2*x4]
-[ -0.00012646, x2*x3]
-[   -0.027613,    x1]
-[ -0.00036617, x1*x5]
-[ -0.00043459, x1*x4]
-[ -0.00011518, x1*x3]
-[  -0.0009348, x1*x2]
-[      3.9964,   1.0]
-[   0.0004941,  x2^2]
-[  0.00014775,  x3^2]
-[    0.010017,  x5^2]</p>
+    Coefficient     Term  
+    ___________    _______
+
+      0.0022642    'x5'   
+      0.0058919    'x4'   
+    -0.00049119    'x4.x5'
+        0.01644    'x3'   
+    -0.00098813    'x3.x5'
+     7.6129e-05    'x3.x4'
+       0.014969    'x2'   
+     -0.0023337    'x2.x5'
+      0.0028077    'x2.x4'
+    -0.00012646    'x2.x3'
+      -0.027613    'x1'   
+    -0.00036617    'x1.x5'
+    -0.00043459    'x1.x4'
+    -0.00011518    'x1.x3'
+     -0.0009348    'x1.x2'
+         3.9964    ''     
+      0.0004941    'x2^2' 
+     0.00014775    'x3^2' 
+       0.010017    'x5^2' </p>
 
 <p></p></pre>
 <h2>
@@ -220,12 +192,38 @@ yhatNew =
 <a name="scores" class="anchor" href="#scores"><span class="octicon octicon-link"></span></a>Scores<a name="9"></a>
 </h2>
 <p align="justify">Unless you have a stake in deeply understanding this code, don't try to make sense of the Scores matrix, chances are you won't ever need to use it.</p>
+<h2>Polynomial Expression<a name="9"></a></h2><p>You would like to see the actual formula of the fit,</p><pre class="codeinput">PolynomialFormula=reg.PolynomialExpression
+</pre><pre class="codeoutput">
+PolynomialFormula = 
+
+    Coefficient     Term  
+    ___________    _______
+
+      0.0052679    'x5'   
+      0.0073888    'x4'   
+    -8.7941e-05    'x4.x5'
+       0.016723    'x3'   
+    -0.00097694    'x3.x5'
+     8.3902e-05    'x3.x4'
+       0.015417    'x2'   
+     -0.0025415    'x2.x5'
+       0.002392    'x2.x4'
+    -0.00018939    'x2.x3'
+      -0.028576    'x1'   
+    -0.00045571    'x1.x5'
+    -0.00037732    'x1.x4'
+    -0.00010521    'x1.x3'
+    -0.00047654    'x1.x2'
+         4.0108    ''     
+    -4.9811e-05    'x1^2' 
+    -0.00026949    'x2^2' 
+     0.00014575    'x3^2' 
+    -6.5765e-05    'x4^2' 
+       0.011599    'x5^2' 
+
+</pre>
 <h2>
 <a name="cofficients" class="anchor" href="#cofficients"><span class="octicon octicon-link"></span></a>Cofficients<a name="10"></a>
-</h2>
-<p align="justify">This was shown earlier at the input examples.</p>
-<h2>
-<a name="legend-1" class="anchor" href="#legend-1"><span class="octicon octicon-link"></span></a>Legend<a name="11"></a>
 </h2>
 <p align="justify">This was shown earlier at the input examples.</p>
 <h2>
