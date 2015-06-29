@@ -35,10 +35,9 @@ function reg = MultiPolyRegress(Data,R,PW,varargin)
 %                         point, before multiplication with coefficients.
 %                         In other words, it is the matrix X you would have
 %                         input in to the Statistical Toolbox function
-%                         "regress".                    
+%                         "regress".    
+%   PolynomialExpression: The expression for the fitted polynomial.
 %           Coefficients: For the calculated fit.
-%                 Legend: (OPTIONAL) Identity of the corresponding polynomial 
-%                         terms for Coefficients or 'No Legend'.
 %                   yhat: Estimated values by the fit.
 %              Residuals: y-yhat or R-yhat in syntax ofthis code,
 %          GoodnessOfFit: Section Header
@@ -183,7 +182,7 @@ function reg = MultiPolyRegress(Data,R,PW,varargin)
     
     % Construct Output
     reg = struct('FitParameters','-----------------','PowerMatrix',A,'Scores',Scores, ...
-        'PolynomialExpression',PolyExp, 'yhat', yhat, 'Residuals', r, ...
+        'PolynomialExpression',PolyExp,'Coefficients',b, 'yhat', yhat, 'Residuals', r, ...
         'GoodnessOfFit','-----------------', 'RSquare', r2, 'MAE', mae, 'MAESTD', maestd, ...
         'Normalization',NormalizationSwitch,'LOOCVGoodnessOfFit','-----------------', 'CVRSquare', ...
         CVr2, 'CVMAE', CVmae, 'CVMAESTD', CVmaestd,'CVNormalization',NormalizationSwitch);
