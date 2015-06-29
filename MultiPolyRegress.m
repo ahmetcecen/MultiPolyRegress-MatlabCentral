@@ -13,10 +13,6 @@ function reg = MultiPolyRegress(Data,R,PW,varargin)
 %   m-by-1 vector. A PV of [2 1] would limit a 2-dimensional 2nd degree polynomial to 
 %	the terms that have x^2, x and y, eliminating the terms with y^2.
 %
-%   reg = MultiPolyRegress(...,'legend') turns on the legend calculation. Legend
-%	is a symbolic vector that contains the corresponding polynomial term for each 
-%	coefficient in the fitted polynomial. Legend functionality REQUIRES SYMBOLIC TOOLBOX.
-%
 %   reg = MultiPolyRegress(...,'figure') adds a scatter plot for the fit. 
 %
 %   reg = MultiPolyRegress(...,'range') adjusts the normalization of
@@ -67,18 +63,15 @@ function reg = MultiPolyRegress(Data,R,PW,varargin)
     FigureSwitch='figureoff';
     NormalizationSwitch='1-to-1 (Default)';
     if nargin > 3
-        for i=1:length(varargin)
-            if strcmp(varargin{i},'legend') == 1
-                LegendSwitch='legendon';
-            end
-            if strcmp(varargin{i},'figure') == 1
+        for ii=1:length(varargin)
+            if strcmp(varargin{ii},'figure') == 1
                 FigureSwitch='figureon';
             end
-            if strcmp(varargin{i},'range') == 1
+            if strcmp(varargin{ii},'range') == 1
                 NormalizationSwitch='Range';
             end
-            if isnumeric(varargin{i}) == 1
-                PV=varargin{i};
+            if isnumeric(varargin{ii}) == 1
+                PV=varargin{ii};
             end
         end
     end
@@ -94,44 +87,53 @@ function reg = MultiPolyRegress(Data,R,PW,varargin)
     A=zeros(Lim^NVars,NVars);
 
     % Create Colums Corresponding to Mathematical Base
-    for i=1:NVars
-        A(:,i)=mod(floor((1:Lim^NVars)/Lim^(i-1)),Lim);
+    for ii=1:NVars
+        A(:,ii)=mod(floor((1:Lim^NVars)/Lim^(ii-1)),Lim);
     end
 
     % Flip - Reduce - Augment
     A=fliplr(A); A=A(sum(A,2)<=Lim,:); Ab=diag(repmat(Lim,[1,NVars])); A=[A;Ab];
 
     % Degree Conditionals
-    for i=1:NVars
-        A=A(A(:,i)<=PV(i),:);
+    for ii=1:NVars
+        A=A(A(:,ii)<=PV(ii),:);
     end
 
     % Build Framework
-	if strcmp(LegendSwitch,'legendon')==1
-		B=sym(zeros(size(A,1),NVars));
-		for i=1:NVars
-			B(:,i)=sym(['x',num2str(i)]);
-			RowMultiB=strcat(RowMultiB,['.*B(:,',num2str(i),')']);
-			RowMultiC=strcat(RowMultiC,['.*C(:,',num2str(i),')']);
-		end
-		% Create a Legend for Coefficient Correspondence
-		B=B.^A; Legend = eval(RowMultiB); %#ok<NASGU>
-	else
-		for i=1:NVars
-			RowMultiC=strcat(RowMultiC,['.*C(:,',num2str(i),')']);
-		end
-		Legend='No Legend';
-	end
+    NLegend = size(A,1);
+
+    Legend=cell(NLegend,1);
+    for ii=1:NVars
+        RowMultiC=strcat(RowMultiC,['.*C(:,',num2str(ii),')']);
+    end
+    % Create a Legend for Coefficient Correspondence
+    for ii=1:NLegend
+        currentTerm=find(A(ii,:));
+        currentLegend='';
+        for jj=1:length(currentTerm);
+            if jj==1;
+                currentLegend=[currentLegend,'x',num2str(currentTerm(jj))];
+                if A(ii,currentTerm(jj)) > 1
+                    currentLegend=[currentLegend,'^',num2str(A(ii,currentTerm(jj)))];
+                end
+            else                  
+                currentLegend=[currentLegend,'.x',num2str(currentTerm(jj))];
+                if A(ii,currentTerm(jj)) > 1
+                    currentLegend=[currentLegend,'^',num2str(A(ii,currentTerm(jj)))];
+                end
+            end
+        end
+        Legend{ii,1}=currentLegend;
+    end
 
     % Allocate
-    NLegend = size(A,1);
     Scores = zeros(NData,NLegend);
     
     % Compose
-    for i=1:NData
-        current=repmat(Data(i,:),[NLegend,1]);
+    for ii=1:NData
+        current=repmat(Data(ii,:),[NLegend,1]);
         C=current.^A; %#ok<NASGU>
-        Scores(i,:) = eval(RowMultiC);
+        Scores(ii,:) = eval(RowMultiC);
     end
 
 	% Use  QR to avoid explicit inversion and check rank. 
@@ -151,6 +153,9 @@ function reg = MultiPolyRegress(Data,R,PW,varargin)
 	b(perm) = RR \ (QQ'*R);
 	yhat = Scores*b;                     
     r = R-yhat;   
+    
+    % Polynomial Expression
+    PolyExp=table(b,Legend,'VariableNames',{'Coefficient','Term'});
 	
     % Goodness of Fit
     r2 = 1 - (norm(r)).^2/norm(R-mean(R))^2;
@@ -178,7 +183,7 @@ function reg = MultiPolyRegress(Data,R,PW,varargin)
     
     % Construct Output
     reg = struct('FitParameters','-----------------','PowerMatrix',A,'Scores',Scores, ...
-        'Coefficients', b, 'Legend', Legend, 'yhat', yhat, 'Residuals', r, ...
+        'PolynomialExpression',PolyExp, 'yhat', yhat, 'Residuals', r, ...
         'GoodnessOfFit','-----------------', 'RSquare', r2, 'MAE', mae, 'MAESTD', maestd, ...
         'Normalization',NormalizationSwitch,'LOOCVGoodnessOfFit','-----------------', 'CVRSquare', ...
         CVr2, 'CVMAE', CVmae, 'CVMAESTD', CVmaestd,'CVNormalization',NormalizationSwitch);
