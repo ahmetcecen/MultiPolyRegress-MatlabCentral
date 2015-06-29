@@ -9,29 +9,28 @@
 %% Plain
 load Example.mat
 reg=MultiPolyRegress(X,Y,2) % Gives you your fit.
+
 %% Normalization - Range
 % Different error definition ONLY in the calculation of MAE, MAESTD, CVMAE
 % and CVMAESTD. Does not effect the fit.
-load Example.mat
 reg=MultiPolyRegress(X,Y,2,'range')
+
 %% Figure
 % You would like to see a scatter plot of your fit.
 reg=MultiPolyRegress(X,Y,2,'figure');
-%% Legend
-% You would like to see the actual formula of the fit,
-reg=MultiPolyRegress(X,Y,2,'legend');
-PolynomialFormula=vpa([reg.Coefficients reg.Legend],5)
+
 %% PV 
 % You would like to limit the observed powers of certain terms in your
 % polynomial. For example, you do not want the 1st and 4th Independent
 % Variables (x1 and x4) to have second order terms (x1^2 or x4^2). Notice
 % you have to explicitly write how high each term can go in powers, so I
 % would also state I am fine with (x2 x3 and x5) having 2nd order terms. 
+reg=MultiPolyRegress(X,Y,2,[1 2 2 1 2]); 
+PolynomialFormula=reg.PolynomialExpression
 
-reg=MultiPolyRegress(X,Y,2,[1 2 2 1 2],'legend'); 
-PolynomialFormula=vpa([reg.Coefficients reg.Legend],5)
 %% How to Use the Outputs
 reg=MultiPolyRegress(X,Y,2);
+
 %% PowerMatrix
 % You have a new data point you would like to evaluate using the computed
 % fit. Lets assume for the sake of argument that the 250th row of X is in
@@ -57,16 +56,25 @@ yhatNew=reg.Coefficients'*EvalScores % The estimate for the new data point.
 % Unless you have a stake in deeply understanding this code, don't try to
 % make sense of the Scores matrix, chances are you won't ever need to use
 % it.
+
+%% Polynomial Expression
+% You would like to see the actual formula of the fit,
+PolynomialFormula=reg.PolynomialExpression
+
 %% Cofficients
 % This was shown earlier at the input examples.
+
 %% Legend
 % This was shown earlier at the input examples.
+
 %% yhat
 % This is the vector of estimates using your new fit. The scatter plot you
 % see when you use the 'figure' option is generated using scatter(yhat,y).
+
 %% Residuals
 % This is defined as y-yhat. Can be used for a residual plot to see if
 % ordinary least squares assumptions hold true.
+
 %% Goodness of Fit Measures
 % These are useful not only in assesing the accuracy of your fit, but also
 % comparing different candidates. For example, lets see how different
