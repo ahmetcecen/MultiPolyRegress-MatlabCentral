@@ -113,12 +113,12 @@ function reg = MultiPolyRegress(Data,R,PW,varargin)
             if jj==1;
                 currentLegend=[currentLegend,'x',num2str(currentTerm(jj))];
                 if A(ii,currentTerm(jj)) > 1
-                    currentLegend=[currentLegend,'^',num2str(A(ii,currentTerm(jj)))];
+                    currentLegend=[currentLegend,'.^',num2str(A(ii,currentTerm(jj)))];
                 end
             else                  
-                currentLegend=[currentLegend,'.x',num2str(currentTerm(jj))];
+                currentLegend=[currentLegend,'.*x',num2str(currentTerm(jj))];
                 if A(ii,currentTerm(jj)) > 1
-                    currentLegend=[currentLegend,'^',num2str(A(ii,currentTerm(jj)))];
+                    currentLegend=[currentLegend,'.^',num2str(A(ii,currentTerm(jj)))];
                 end
             end
         end
@@ -154,7 +154,23 @@ function reg = MultiPolyRegress(Data,R,PW,varargin)
     r = R-yhat;   
     
     % Polynomial Expression
-    PolyExp=table(b,Legend,'VariableNames',{'Coefficient','Term'});
+    L=char(Legend);
+    L(L(:,1)==' ')='1';
+    B=num2str(b);
+    Poly=[repmat(char('+'),[size(B,1) 1]) B repmat(char('.*'),[size(B,1) 1]) L]';
+    Poly=reshape(Poly,[1 size(Poly,1)*size(Poly,2)]);
+    
+    variablesexp='@(';
+    for ii=1:size(A,2);
+        if ii==1
+            variablesexp=[variablesexp,'x',num2str(ii)];
+        else
+            variablesexp=[variablesexp,',x',num2str(ii)];
+        end
+    end
+    variablesexp=[variablesexp,') '];
+    
+    eval(['PolyExp = ',variablesexp,Poly]);
 	
     % Goodness of Fit
     r2 = 1 - (norm(r)).^2/norm(R-mean(R))^2;
@@ -182,7 +198,7 @@ function reg = MultiPolyRegress(Data,R,PW,varargin)
     
     % Construct Output
     reg = struct('FitParameters','-----------------','PowerMatrix',A,'Scores',Scores, ...
-        'PolynomialExpression',PolyExp,'Coefficients',b, 'yhat', yhat, 'Residuals', r, ...
+        'PolynomialExpression',PolyExp,'Coefficients',b, 'Legend', L, 'yhat', yhat, 'Residuals', r, ...
         'GoodnessOfFit','-----------------', 'RSquare', r2, 'MAE', mae, 'MAESTD', maestd, ...
         'Normalization',NormalizationSwitch,'LOOCVGoodnessOfFit','-----------------', 'CVRSquare', ...
         CVr2, 'CVMAE', CVmae, 'CVMAESTD', CVmaestd,'CVNormalization',NormalizationSwitch);
@@ -205,5 +221,4 @@ function reg = MultiPolyRegress(Data,R,PW,varargin)
         grid on
     end
 end
-    
     
