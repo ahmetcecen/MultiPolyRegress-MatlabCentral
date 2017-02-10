@@ -170,7 +170,7 @@ function reg = MultiPolyRegress(Data,R,PW,varargin)
     end
     variablesexp=[variablesexp,') '];
     
-    eval(['PolyExp = ',variablesexp,Poly]);
+    eval(['PolyExp = ',variablesexp,Poly, ';']);
 	
     % Goodness of Fit
     r2 = 1 - (norm(r)).^2/norm(R-mean(R))^2;
